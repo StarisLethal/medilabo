@@ -21,8 +21,12 @@ public class PatientController {
 
     @GetMapping("/")
     public String home(Model model) {
-        List<PatientBean> patients = patientProxy.getPatients();
-        model.addAttribute("patients", patients);
+        try {
+            List<PatientBean> patients = patientProxy.getPatients();
+            model.addAttribute("patients", patients);
+        } catch (Exception e) {
+            System.err.println("Error fetching patients: " + e.getMessage());
+        }
         return "home";
     }
 

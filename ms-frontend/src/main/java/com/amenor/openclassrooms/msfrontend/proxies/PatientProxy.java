@@ -3,14 +3,14 @@ package com.amenor.openclassrooms.msfrontend.proxies;
 import com.amenor.openclassrooms.msfrontend.bean.PatientBean;
 
 
-import com.amenor.openclassrooms.msfrontend.config.FeignConfig;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "MS-GATEWAY", configuration = FeignConfig.class)
+@FeignClient(name = "MS-GATEWAY")
 public interface PatientProxy {
 
     @GetMapping("/patients")

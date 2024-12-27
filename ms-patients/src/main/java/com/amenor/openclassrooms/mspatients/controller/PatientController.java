@@ -25,7 +25,7 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping("")
-    public ResponseEntity<List<Patient>> listPatients(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<Patient>> listPatients() {
         try {
             logger.info("listPatients called");
             List<Patient> patients = patientService.getAllPatients();
@@ -37,7 +37,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Patient>> getPatientById(@PathVariable UUID id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Optional<Patient>> getPatientById(@PathVariable UUID id) {
         try {
             logger.info("getPatientById called");
             Optional<Patient> patient = patientService.getPatientById(id);
@@ -49,7 +49,7 @@ public class PatientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
         try {
             logger.info("createPatient called");
             Patient createPatient = patientService.addPatient(patient);
@@ -61,7 +61,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable UUID id, @RequestBody Patient patient, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Patient> updatePatient(@PathVariable UUID id, @RequestBody Patient patient) {
         try {
             logger.info("updatePatient called");
             Boolean updatePatient = patientService.updatePatient(patient, id);

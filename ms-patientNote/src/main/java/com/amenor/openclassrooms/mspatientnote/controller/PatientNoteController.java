@@ -23,7 +23,7 @@ public class PatientNoteController {
     private PatientNoteService patientNoteService;
 
     @GetMapping("")
-    public ResponseEntity<List<PatientNote>> getPatientNotes(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<PatientNote>> getPatientNotes() {
         try {
             logger.info("getPatientNotes called");
             List<PatientNote> patientNotes = patientNoteService.getAllPatientNotes();
@@ -35,7 +35,7 @@ public class PatientNoteController {
     }
 
     @GetMapping("/{patientId}")
-    public ResponseEntity<List<PatientNote>> getPatientNoteByPatientId(@PathVariable("patientId") UUID patientId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<PatientNote>> getPatientNoteByPatientId(@PathVariable("patientId") UUID patientId) {
         try {
             logger.info("getPatientNoteById called");
             List<PatientNote> patientNotes = patientNoteService.getPatientNotebyPatientId(patientId);
@@ -47,7 +47,7 @@ public class PatientNoteController {
     }
 
     @GetMapping("/byNote/{patientNoteId}")
-    public ResponseEntity<Optional<PatientNote>> getPatientNoteById(@PathVariable("patientNoteId") UUID patientNoteId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Optional<PatientNote>> getPatientNoteById(@PathVariable("patientNoteId") UUID patientNoteId) {
         try {
             logger.info("getPatientNoteByPatientId called");
             Optional<PatientNote> patientNotes = patientNoteService.getPatientNoteByID(patientNoteId);
@@ -59,7 +59,7 @@ public class PatientNoteController {
     }
 
     @PostMapping("")
-    public ResponseEntity<PatientNote> createPatientNote(@RequestBody PatientNote patientNote, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<PatientNote> createPatientNote(@RequestBody PatientNote patientNote) {
         try {
             logger.info("createPatientNote called");
             PatientNote newpatientNote = patientNoteService.createPatientNote(patientNote);
@@ -73,8 +73,7 @@ public class PatientNoteController {
     @GetMapping("/diagnose")
     public ResponseEntity<String> getDiabeteDiagnose(@RequestParam("patientId") UUID patientId,
                                                      @RequestParam("gender") String gender,
-                                                     @RequestParam("birthDate") String birthDate,
-                                                     @RequestHeader("Authorization") String token) {
+                                                     @RequestParam("birthDate") String birthDate) {
         try {
             logger.info("getDiabeteDignose called");
             String diagnose = patientNoteService.diabeteDiagnose(birthDate, gender, patientId);
