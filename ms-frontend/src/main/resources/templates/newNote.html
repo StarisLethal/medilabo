@@ -3,17 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<h1>Formulaire de Création de Patient</h1>
-<form th:action="@{/createNote}" th:object="${patientNote}" method="post">
-    <input type="hidden" th:field="*{patientId}" />
-    <div>
-        <label for="note">Note:</label>
-        <textarea id="note" th:field="*{patientNote}" placeholder="Enter note here..." rows="4" cols="50"></textarea>
-    </div>
-    <button type="submit">Submit</button>
-</form>
+<div class="editRecord">
+
+    <h1>Formulaire de Création de Note</h1>
+    <form th:action="@{/createNote}" th:object="${patientNote}" method="post">
+        <input type="hidden" th:field="*{patientId}"/>
+        <div class="form-group">
+            <label for="note">Note:</label>
+            <input type="text" id="note" th:field="*{patientNote}" placeholder="Enter your note here..."/>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+
+    </br></br></br>
+    <a th:href="@{/}" class="btn btn-default">Home</a>
+</div>
+
 </body>
 </html>

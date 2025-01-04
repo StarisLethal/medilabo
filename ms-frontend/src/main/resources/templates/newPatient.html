@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+
+<div class="editRecord">
 
 <h1>Formulaire de Création de Patient</h1>
 <form action="/createPatient" method="post">
@@ -32,6 +35,10 @@
 
     <input type="submit" value="Create patient record">
 </form>
+
+    </br></br></br>
+    <a th:href="@{/}" class="btn btn-default">Home</a>
+</div>
 
 </body>
 </html>

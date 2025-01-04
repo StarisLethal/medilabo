@@ -3,19 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<a th:if="${not #lists.isEmpty(patientNotes)}" th:href="@{/newNote(patientId=${patientNotes[0].patientId})}">Create Note</a></br></br></br>
+<div class="editRecord">
 
-<table>
-    <tbody>
-    <tr th:each="patientNote : ${patientNotes}">
-        <td th:text="'Note: ' + ${patientNote.patientNote}"></td>
-    </tr>
-    </tbody>
-</table>
-</br></br></br>
-<a th:href="@{/}">Home</a>
+    <a th:href="@{/newNote(patientId=${id})}"
+       class="btn btn-default">Create Note</a>
+
+    </br></br></br>
+
+
+    <p th:if="${patientNotes == null or patientNotes.isEmpty()}">No notes available for this patient.</p>
+
+    <table>
+        <tbody>
+        <tr th:each="patientNote : ${patientNotes}">
+            <td th:text="'Note: ' + ${patientNote.patientNote}"></td>
+        </tr>
+        </tbody>
+    </table>
+    </br></br></br>
+    <a th:href="@{/}" class="btn btn-default">Home</a>
+
+</div>
+
 </body>
 </html>

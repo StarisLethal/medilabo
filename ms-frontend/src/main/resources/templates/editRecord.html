@@ -3,43 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<table>
-    <tr>
-        <form action="/editedRecord" th:object="${patient}" th:method="put">
+<div class="editRecord">
+    <table>
+        <tr>
+            <form action="/editedRecord" th:object="${patient}" th:method="put">
 
-            <input type="hidden" name="id" th:value="${patient.getId()}">
+                <input type="hidden" name="id" th:value="${patient.getId()}">
 
-            <label for="firstName">Prénom:</label>
-            <input type="text" id="firstName" name="firstName" th:value="${patient.getFirstName()}" required><br><br>
+                <label for="firstName">Prénom:</label>
+                <input type="text" id="firstName" name="firstName" th:value="${patient.getFirstName()}"
+                       required><br><br>
 
-            <label for="lastName">Nom:</label>
-            <input type="text" id="lastName" name="lastName" th:value="${patient.getLastName()}" required><br><br>
+                <label for="lastName">Nom:</label>
+                <input type="text" id="lastName" name="lastName" th:value="${patient.getLastName()}" required><br><br>
 
-            <label for="birthDate">Date de naissance:</label>
-            <input type="date" id="birthDate" name="birthDate" min="1900-01-01" max="2024-12-31" th:value="${#dates.format(patient.birthDate, 'yyyy-MM-dd')}"
-                   required/><br>
+                <label for="birthDate">Date de naissance:</label>
+                <input type="date" id="birthDate" name="birthDate" min="1900-01-01" max="2024-12-31"
+                       th:value="${#dates.format(patient.birthDate, 'yyyy-MM-dd')}"
+                       required/><br>
 
-            <label for="gender">Genre:</label>
-            <select id="gender" name="gender" required>
-                <option value="M" th:selected="${patient.getGender() == 'M'}">Masculin</option>
-                <option value="F" th:selected="${patient.getGender() == 'F'}">Féminin</option>
-                <option value="Other" th:selected="${patient.getGender() == 'Other'}">Autre</option>
-            </select><br><br>
+                <label for="gender">Genre:</label>
+                <select id="gender" name="gender" required>
+                    <option value="M" th:selected="${patient.getGender() == 'M'}">Masculin</option>
+                    <option value="F" th:selected="${patient.getGender() == 'F'}">Féminin</option>
+                    <option value="Other" th:selected="${patient.getGender() == 'Other'}">Autre</option>
+                </select><br><br>
 
-            <label for="address">Adresse:</label>
-            <input type="text" id="address" name="address" th:value="${patient.getAddress()}"><br><br>
+                <label for="address">Adresse:</label>
+                <input type="text" id="address" name="address" th:value="${patient.getAddress()}"><br><br>
 
-            <label for="phone">Téléphone:</label>
-            <input type="tel" id="phone" name="phone" th:value="${patient.getPhone()}"><br><br>
+                <label for="phone">Téléphone:</label>
+                <input type="tel" id="phone" name="phone" th:value="${patient.getPhone()}"><br><br>
 
-            <input type="submit" value="Edit patient record">
-        </form>
-    </tr>
-</table>
-</br>
-<a th:href="@{/}">Home</a>
+                <input type="submit" value="Edit patient record">
+            </form>
+        </tr>
+    </table>
+    </br>
+    <a th:href="@{/}" class="btn btn-default">Home</a>
+</div>
 </body>
 </html>
