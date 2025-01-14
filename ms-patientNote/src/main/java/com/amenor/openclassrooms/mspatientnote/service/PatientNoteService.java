@@ -20,7 +20,7 @@ public class PatientNoteService {
     public PatientNoteService(PatientNoteRepository patientNoteRepository, SymptomDictionary symptomDictionary) {
         this.patientNoteRepository = patientNoteRepository;
         this.symptomDictionary = symptomDictionary;
-        System.out.println("Injected SymptomDictionary: " + symptomDictionary.getDictionary());
+
     }
 
     public List<PatientNote> getAllPatientNotes() {
@@ -53,6 +53,7 @@ public class PatientNoteService {
             for (String note : noteToCount) {
                 if (pattern.matcher(note).find()) {
                     symptomCount++;
+
                     break;
                 }
             }
@@ -65,7 +66,7 @@ public class PatientNoteService {
         Integer symptom = symptomCount(id);
         Integer age = getAge(birthDate);
         if ((gender.equals("M") && age < 30 && symptom > 5) || (gender.equals("F") && age < 30 && symptom > 7) || (age >= 30 && symptom > 8)) {
-            System.out.println(symptom);
+
             return true;
         }
         return false;
@@ -75,7 +76,7 @@ public class PatientNoteService {
         Integer symptom = symptomCount(id);
         Integer age = getAge(birthDate);
         if ((gender.equals("M") && age < 30 && symptom == 3) || (gender.equals("F") && age < 30 && symptom == 4) || (age >= 30 && symptom == 6 || symptom == 7)) {
-            System.out.println(symptom);
+
             return true;
         }
         return false;
@@ -85,7 +86,7 @@ public class PatientNoteService {
         Integer symptom = symptomCount(id);
         Integer age = getAge(birthDate);
         if ((age >= 30) && (symptom >= 2 && symptom <= 5)) {
-            System.out.println(symptom);
+
             return true;
         }
         return false;
@@ -95,6 +96,7 @@ public class PatientNoteService {
         if (symptomCount(id) == 0) {
             return true;
         }
+
         return false;
     }
 

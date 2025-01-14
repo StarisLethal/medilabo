@@ -33,18 +33,6 @@ services:
       ms-config:
         condition: service_healthy
 
-  ms-authserv:
-
-    image: ms-authserv:1
-    environment:
-      - "SPRING_PROFILES_ACTIVE=docker"
-      - "JWT_SECRET=229e93717f15d2d4cfac37890b078c2f939fd03f099751bc534e12a25ae171da"
-    ports:
-      - 8081:8081
-    depends_on:
-      ms-config:
-        condition: service_healthy
-
   ms-patients:
 
     image: ms-patients:1
@@ -73,7 +61,7 @@ services:
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - 8080:8080
+      - 8180:8180
     depends_on:
       ms-config:
         condition: service_healthy  
@@ -101,20 +89,7 @@ services:
       - ./db_note:/data/db
     ports:
       - "27027:27027"
-    command: ["mongod", "--port", "27027", "--bind_ip", "0.0.0.0"]  
-
-  mongodb_user:
-    image: mongo:latest
-    container_name: mongodb_user
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    volumes:
-      - ./db_user:/data/db
-    ports:
-      - "27037:27037"
-    command: ["mongod", "--port", "27037", "--bind_ip", "0.0.0.0"]     
+    command: ["mongod", "--port", "27027", "--bind_ip", "0.0.0.0"]
 
 
 

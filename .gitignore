@@ -34,3 +34,12 @@ build/
 /db/
 /db_note/
 /db_user/
+/medilabo-theme/
+/medilabo-theme/login/
+/medilabo-theme/login/img/
+/medilabo-theme/login/img/logo.jpeg
+/medilabo-theme/login/resources/
+/medilabo-theme/login/resources/styles.css
+/medilabo-theme/login/login.ftl
+/medilabo-theme/login/messages.properties
+/medilabo-theme/login/theme.properties
