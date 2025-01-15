@@ -2,6 +2,7 @@ package com.amenor.openclassrooms.msfrontend.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("!test")
 public class FeignInterceptor implements RequestInterceptor {
 
     private final OAuth2AuthorizedClientManager authorizedClientManager;

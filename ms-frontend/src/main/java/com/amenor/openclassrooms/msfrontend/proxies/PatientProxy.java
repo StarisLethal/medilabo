@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "MS-GATEWAY")
+@FeignClient(name = "MS-GATEWAY", contextId = "patientProxy")
 public interface PatientProxy {
 
     @GetMapping("/patients")

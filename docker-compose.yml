@@ -1,70 +1,78 @@
+version: '3.8'
+
 services:
 
   ms-config:
-
     image: ms-config:1
     ports:
-      - 9500:9500
+      - "9500:9500"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:9500/actuator/health || exit 1"]
-      interval: 30s
+      interval: 10s
       timeout: 10s
       retries: 5
+    networks:
+      - app_network
 
   ms-discovery:
-
     image: ms-discovery:1
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - 9502:9502
+      - "9502:9502"
     depends_on:
       ms-config:
         condition: service_healthy
+    networks:
+      - app_network
 
   ms-gateway:
-
     image: ms-gateway:1
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - 9504:9504
+      - "9504:9504"
     depends_on:
       ms-config:
         condition: service_healthy
+    networks:
+      - app_network
 
   ms-patients:
-
     image: ms-patients:1
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - 9560:9560
+      - "9560:9560"
     depends_on:
       ms-config:
         condition: service_healthy
+    networks:
+      - app_network
 
   ms-patientnote:
-
     image: ms-patientnote:1
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - 9565:9565
+      - "9565:9565"
     depends_on:
       ms-config:
         condition: service_healthy
-      
-  ms-frontend:
+    networks:
+      - app_network
 
+  ms-frontend:
     image: ms-frontend:1
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     ports:
-      - 8180:8180
+      - "8180:8180"
     depends_on:
       ms-config:
-        condition: service_healthy  
+        condition: service_healthy
+    networks:
+      - app_network
 
   mongodb:
     image: mongo:latest
@@ -76,8 +84,10 @@ services:
     volumes:
       - ./db:/data/db
     ports:
-      - "27017:27017"   
-      
+      - "27017:27017"
+    networks:
+      - app_network
+
   mongodb_note:
     image: mongo:latest
     container_name: mongodb_note
@@ -90,9 +100,53 @@ services:
     ports:
       - "27027:27027"
     command: ["mongod", "--port", "27027", "--bind_ip", "0.0.0.0"]
+    networks:
+      - app_network
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak_container
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db_user:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloakpassword
+    ports:
+      - "8081:8080"
+    depends_on:
+      db_user:
+        condition: service_healthy
+    volumes:
+      - ./medilabo-theme:/opt/keycloak/themes/medilabo-theme
+    command: start-dev
+    restart: unless-stopped
+    networks:
+      - app_network
 
+  db_user:
+    image: postgres:15
+    container_name: db_user
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloakpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak || exit 1"]
+      interval: 10s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - app_network
 
+volumes:
+  postgres_data:
 
-
-
+networks:
+  app_network:
+    driver: bridge

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@FeignClient(name = "MS-GATEWAY")
+@FeignClient(name = "MS-GATEWAY", contextId = "patientNoteProxy")
 public interface PatientNoteProxy {
     @GetMapping("/patientNotes/{patientId}")
     List<PatientNoteBean> getPatientNoteByPatientId(@PathVariable("patientId") UUID patientId);
